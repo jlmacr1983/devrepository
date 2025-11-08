@@ -1,15 +1,15 @@
 {
-	"name": "SourceDimDate",
+	"name": "Customers",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "SqlServerTable2",
+						"referenceName": "Src_SalesCustomer",
 						"type": "DatasetReference"
 					},
-					"name": "DimDate"
+					"name": "customer"
 				}
 			],
 			"sinks": [
@@ -18,47 +18,42 @@
 						"referenceName": "AzureSQL",
 						"type": "DatasetReference"
 					},
-					"name": "DestDimDate"
+					"name": "destcustomers"
 				}
 			],
 			"transformations": [],
 			"scriptLines": [
 				"source(output(",
-				"          DateKey as integer,",
-				"          FullDateAlternateKey as date,",
-				"          DayNumberOfWeek as integer,",
-				"          EnglishDayNameOfWeek as string,",
-				"          SpanishDayNameOfWeek as string,",
-				"          FrenchDayNameOfWeek as string,",
-				"          DayNumberOfMonth as integer,",
-				"          DayNumberOfYear as integer,",
-				"          WeekNumberOfYear as integer,",
-				"          EnglishMonthName as string,",
-				"          SpanishMonthName as string,",
-				"          FrenchMonthName as string,",
-				"          MonthNumberOfYear as integer,",
-				"          CalendarQuarter as integer,",
-				"          CalendarYear as integer,",
-				"          CalendarSemester as integer,",
-				"          FiscalQuarter as integer,",
-				"          FiscalYear as integer,",
-				"          FiscalSemester as integer",
+				"          CustomerID as integer,",
+				"          NameStyle as boolean,",
+				"          Title as string,",
+				"          FirstName as string,",
+				"          MiddleName as string,",
+				"          LastName as string,",
+				"          Suffix as string,",
+				"          CompanyName as string,",
+				"          SalesPerson as string,",
+				"          EmailAddress as string,",
+				"          Phone as string,",
+				"          PasswordHash as string,",
+				"          PasswordSalt as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as timestamp",
 				"     ),",
-				"     allowSchemaDrift: false,",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> DimDate",
-				"DimDate sink(allowSchemaDrift: true,",
+				"     format: 'table') ~> customer",
+				"customer sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
-				"     recreate:true,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> DestDimDate"
+				"     errorHandlingOption: 'stopOnFirstError') ~> destcustomers"
 			]
 		}
 	}
