@@ -1,0 +1,17 @@
+{
+	"name": "DWAzureSQL_Dest",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "dbadventureserver001.database.windows.net",
+			"database": "dbtestadventure",
+			"encrypt": "optional",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "jorge",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDU1QkZCQkQ3LTQyQUUtNDE3MC1CQUI3LTcxODk4Q0M4NTlCRl80Y2Y4NDUyNi1lNGZlLTQxMzAtOGMxYi00ZTQ4N2VkMmUxZGYiDQp9"
+		}
+	}
+}
