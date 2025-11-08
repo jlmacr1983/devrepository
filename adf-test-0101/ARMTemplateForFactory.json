@@ -855,8 +855,7 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source1",
-						"source1 alterRow(updateIf(isNull(Suffix)),",
-						"     updateIf(isNull(MiddleName))) ~> FixSuffix",
+						"source1 alterRow(updateIf(isNull(Suffix))) ~> FixSuffix",
 						"FixSuffix derive(Suffix = coalesce(Suffix,'Unknown'),",
 						"          MiddleName = coalesce(MiddleName,'Unknown')) ~> UpdateSuffixNull",
 						"UpdateSuffixNull sink(allowSchemaDrift: true,",
@@ -865,6 +864,7 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
+						"     recreate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -1075,6 +1075,7 @@
 					},
 					"mode": "Microbatch"
 				},
+				"status": "Started",
 				"allowVNetOverride": false
 			},
 			"dependsOn": [
