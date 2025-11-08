@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-test-0101"
+		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"DWAzureSQL_SRC_password": {
+			"value": ""
+		},
+		"LocalServer_AdventureWorks_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "dbadventureserver001.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "dbtestadventure"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "jorge"
+		},
+		"DWAzureSQL_SRC_properties_typeProperties_server": {
+			"value": "dbadventureserver001.database.windows.net"
+		},
+		"DWAzureSQL_SRC_properties_typeProperties_database": {
+			"value": "DW2019"
+		},
+		"DWAzureSQL_SRC_properties_typeProperties_userName": {
+			"value": "jorge"
+		},
+		"LocalServer_AdventureWorks_properties_typeProperties_server": {
+			"value": "DESKTOP-K41HITM"
+		},
+		"LocalServer_AdventureWorks_properties_typeProperties_database": {
+			"value": "AdventureWorksDW2019"
+		},
+		"LocalServer_AdventureWorks_properties_typeProperties_userName": {
+			"value": "sa"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

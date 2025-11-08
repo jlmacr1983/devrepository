@@ -1,0 +1,584 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-test-0101"
+		},
+		"AzureSqlDatabase1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
+		},
+		"DWAzureSQL_SRC_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'DWAzureSQL_SRC'"
+		},
+		"LocalServer_AdventureWorks_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LocalServer_AdventureWorks'"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbadventureserver001.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dbtestadventure"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "jorge"
+		},
+		"DWAzureSQL_SRC_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbadventureserver001.database.windows.net"
+		},
+		"DWAzureSQL_SRC_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "DW2019"
+		},
+		"DWAzureSQL_SRC_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "jorge"
+		},
+		"LocalServer_AdventureWorks_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "DESKTOP-K41HITM"
+		},
+		"LocalServer_AdventureWorks_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdventureWorksDW2019"
+		},
+		"LocalServer_AdventureWorks_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/MoveTables')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DimDate",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Customers",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"customer": {},
+									"destcustomers": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Customers')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSQL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "staging",
+					"table": "DimDate"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LocalServer_AdventureWorks",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "DateKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "FullDateAlternateKey",
+						"type": "date"
+					},
+					{
+						"name": "DayNumberOfWeek",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "EnglishDayNameOfWeek",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SpanishDayNameOfWeek",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FrenchDayNameOfWeek",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DayNumberOfMonth",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "DayNumberOfYear",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "WeekNumberOfYear",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "EnglishMonthName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SpanishMonthName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FrenchMonthName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MonthNumberOfYear",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "CalendarQuarter",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "CalendarYear",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "CalendarSemester",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "FiscalQuarter",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "FiscalYear",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "FiscalSemester",
+						"type": "tinyint",
+						"precision": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DimDate"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LocalServer_AdventureWorks')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LocalServer_AdventureWorks",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "DateKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "FullDateAlternateKey",
+						"type": "date"
+					},
+					{
+						"name": "DayNumberOfWeek",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "EnglishDayNameOfWeek",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SpanishDayNameOfWeek",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FrenchDayNameOfWeek",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DayNumberOfMonth",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "DayNumberOfYear",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "WeekNumberOfYear",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "EnglishMonthName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SpanishMonthName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FrenchMonthName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MonthNumberOfYear",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "CalendarQuarter",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "CalendarYear",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "CalendarSemester",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "FiscalQuarter",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "FiscalYear",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "FiscalSemester",
+						"type": "tinyint",
+						"precision": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DimDate"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LocalServer_AdventureWorks')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Src_SalesCustomer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DWAzureSQL_SRC",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CustomerID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NameStyle",
+						"type": "bit"
+					},
+					{
+						"name": "Title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MiddleName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Suffix",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CompanyName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesPerson",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EmailAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Phone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PasswordHash",
+						"type": "varchar"
+					},
+					{
+						"name": "PasswordSalt",
+						"type": "varchar"
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SalesLT",
+					"table": "Customer"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/DWAzureSQL_SRC')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureSqlDatabase1_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DWAzureSQL_SRC')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('DWAzureSQL_SRC_properties_typeProperties_server')]",
+					"database": "[parameters('DWAzureSQL_SRC_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('DWAzureSQL_SRC_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('DWAzureSQL_SRC_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LocalServer_AdventureWorks')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('LocalServer_AdventureWorks_properties_typeProperties_server')]",
+					"database": "[parameters('LocalServer_AdventureWorks_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('LocalServer_AdventureWorks_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('LocalServer_AdventureWorks_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "SelfHostedRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/SelfHostedRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SelfHostedRuntime')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Customers')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Src_SalesCustomer",
+								"type": "DatasetReference"
+							},
+							"name": "customer"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSQL",
+								"type": "DatasetReference"
+							},
+							"name": "destcustomers"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          CustomerID as integer,",
+						"          NameStyle as boolean,",
+						"          Title as string,",
+						"          FirstName as string,",
+						"          MiddleName as string,",
+						"          LastName as string,",
+						"          Suffix as string,",
+						"          CompanyName as string,",
+						"          SalesPerson as string,",
+						"          EmailAddress as string,",
+						"          Phone as string,",
+						"          PasswordHash as string,",
+						"          PasswordSalt as string,",
+						"          rowguid as string,",
+						"          ModifiedDate as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> customer",
+						"customer sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> destcustomers"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Src_SalesCustomer')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSQL')]"
+			]
+		}
+	]
+}
