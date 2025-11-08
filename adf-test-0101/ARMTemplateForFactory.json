@@ -99,7 +99,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "DimDate",
+						"name": "SourceToStaging",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -127,6 +127,43 @@
 							},
 							"traceLevel": "Fine"
 						}
+					},
+					{
+						"name": "StagingToProd",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "SourceToStaging",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "MoveStg_Prod",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -135,7 +172,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/Customers')]"
+				"[concat(variables('factoryId'), '/dataflows/Customers')]",
+				"[concat(variables('factoryId'), '/dataflows/MoveStg_Prod')]"
 			]
 		},
 		{
