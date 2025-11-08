@@ -1,0 +1,53 @@
+{
+	"name": "AssertsDW",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Src_SalesCustomer",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "ReviewNulls"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as integer,",
+				"          NameStyle as boolean,",
+				"          Title as string,",
+				"          FirstName as string,",
+				"          MiddleName as string,",
+				"          LastName as string,",
+				"          Suffix as string,",
+				"          CompanyName as string,",
+				"          SalesPerson as string,",
+				"          EmailAddress as string,",
+				"          Phone as string,",
+				"          PasswordHash as string,",
+				"          PasswordSalt as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: true,",
+				"     enableCdc: true,",
+				"     mode: 'read',",
+				"     skipInitialLoad: false,",
+				"     waterMarkColumn: 'ModifiedDate',",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT  [CustomerID]\\n      ,[NameStyle]\\n      ,[Title]\\n      ,[FirstName]\\n      ,[MiddleName]\\n      ,[LastName]\\n      ,[Suffix]\\n      ,[CompanyName]\\n      ,[SalesPerson]\\n      ,[EmailAddress]\\n      ,[Phone]\\n      ,[PasswordHash]\\n      ,[PasswordSalt]\\n      ,[rowguid]\\n      ,[ModifiedDate]\\n  FROM [SalesLT].[Customer]\\n  WHERE ModifiedDate>=\\'2025-11-01\\'',",
+				"     format: 'query') ~> source1",
+				"source1 assert(expectTrue(Title==\"Assert\", false, 'assert1', null, \"Titulo invalido\"),",
+				"     abort: true) ~> ReviewNulls"
+			]
+		}
+	}
+}

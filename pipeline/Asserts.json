@@ -1,0 +1,35 @@
+{
+	"name": "Asserts",
+	"properties": {
+		"activities": [
+			{
+				"name": "AssertsDW",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "AssertsDW",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine",
+					"continuationSettings": {
+						"customizedCheckpointKey": "52ca74ea-5c76-4209-a5fd-7a36114b6afc"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
