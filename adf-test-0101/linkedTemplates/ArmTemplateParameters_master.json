@@ -8,16 +8,16 @@
 		"AzureSqlDatabase1_password": {
 			"value": ""
 		},
-		"DWAzureSQL_SRC_password": {
-			"value": ""
-		},
-		"LocalServer_AdventureWorks_password": {
+		"AzureSqlDatabase2_password": {
 			"value": ""
 		},
 		"DWAzureSQL_Dest_password": {
 			"value": ""
 		},
-		"AzureSqlDatabase2_password": {
+		"DWAzureSQL_SRC_password": {
+			"value": ""
+		},
+		"LocalServer_AdventureWorks_password": {
 			"value": ""
 		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
@@ -27,6 +27,24 @@
 			"value": "dbtestadventure"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "jorge"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_server": {
+			"value": "dbadventureserver001.database.windows.net"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_database": {
+			"value": "dbtestadventure"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_userName": {
+			"value": "jorge"
+		},
+		"DWAzureSQL_Dest_properties_typeProperties_server": {
+			"value": "dbadventureserver001.database.windows.net"
+		},
+		"DWAzureSQL_Dest_properties_typeProperties_database": {
+			"value": "dbtestadventure"
+		},
+		"DWAzureSQL_Dest_properties_typeProperties_userName": {
 			"value": "jorge"
 		},
 		"DWAzureSQL_SRC_properties_typeProperties_server": {
@@ -46,24 +64,6 @@
 		},
 		"LocalServer_AdventureWorks_properties_typeProperties_userName": {
 			"value": "sa"
-		},
-		"DWAzureSQL_Dest_properties_typeProperties_server": {
-			"value": "dbadventureserver001.database.windows.net"
-		},
-		"DWAzureSQL_Dest_properties_typeProperties_database": {
-			"value": "dbtestadventure"
-		},
-		"DWAzureSQL_Dest_properties_typeProperties_userName": {
-			"value": "jorge"
-		},
-		"AzureSqlDatabase2_properties_typeProperties_server": {
-			"value": "dbadventureserver001.database.windows.net"
-		},
-		"AzureSqlDatabase2_properties_typeProperties_database": {
-			"value": "dbtestadventure"
-		},
-		"AzureSqlDatabase2_properties_typeProperties_userName": {
-			"value": "jorge"
 		},
 		"containerUri": {
 			"value": ""

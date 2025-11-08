@@ -11,6 +11,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
 		},
+		"AzureSqlDatabase2_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase2'"
+		},
+		"DWAzureSQL_Dest_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'DWAzureSQL_Dest'"
+		},
 		"DWAzureSQL_SRC_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'DWAzureSQL_SRC'"
@@ -18,14 +26,6 @@
 		"LocalServer_AdventureWorks_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LocalServer_AdventureWorks'"
-		},
-		"DWAzureSQL_Dest_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'DWAzureSQL_Dest'"
-		},
-		"AzureSqlDatabase2_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'AzureSqlDatabase2'"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"type": "string",
@@ -36,6 +36,30 @@
 			"defaultValue": "dbtestadventure"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "jorge"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbadventureserver001.database.windows.net"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dbtestadventure"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "jorge"
+		},
+		"DWAzureSQL_Dest_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbadventureserver001.database.windows.net"
+		},
+		"DWAzureSQL_Dest_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dbtestadventure"
+		},
+		"DWAzureSQL_Dest_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "jorge"
 		},
@@ -62,30 +86,6 @@
 		"LocalServer_AdventureWorks_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "sa"
-		},
-		"DWAzureSQL_Dest_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "dbadventureserver001.database.windows.net"
-		},
-		"DWAzureSQL_Dest_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "dbtestadventure"
-		},
-		"DWAzureSQL_Dest_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "jorge"
-		},
-		"AzureSqlDatabase2_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "dbadventureserver001.database.windows.net"
-		},
-		"AzureSqlDatabase2_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "dbtestadventure"
-		},
-		"AzureSqlDatabase2_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "jorge"
 		},
 		"containerUri": {
 			"type": "string",
@@ -117,14 +117,14 @@
 					"AzureSqlDatabase1_password": {
 						"value": "[parameters('AzureSqlDatabase1_password')]"
 					},
-					"DWAzureSQL_SRC_password": {
-						"value": "[parameters('DWAzureSQL_SRC_password')]"
+					"AzureSqlDatabase2_password": {
+						"value": "[parameters('AzureSqlDatabase2_password')]"
 					},
 					"DWAzureSQL_Dest_password": {
 						"value": "[parameters('DWAzureSQL_Dest_password')]"
 					},
-					"AzureSqlDatabase2_password": {
-						"value": "[parameters('AzureSqlDatabase2_password')]"
+					"DWAzureSQL_SRC_password": {
+						"value": "[parameters('DWAzureSQL_SRC_password')]"
 					},
 					"LocalServer_AdventureWorks_password": {
 						"value": "[parameters('LocalServer_AdventureWorks_password')]"
@@ -138,14 +138,14 @@
 					"AzureSqlDatabase1_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
 					},
-					"DWAzureSQL_SRC_properties_typeProperties_server": {
-						"value": "[parameters('DWAzureSQL_SRC_properties_typeProperties_server')]"
+					"AzureSqlDatabase2_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase2_properties_typeProperties_server')]"
 					},
-					"DWAzureSQL_SRC_properties_typeProperties_database": {
-						"value": "[parameters('DWAzureSQL_SRC_properties_typeProperties_database')]"
+					"AzureSqlDatabase2_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase2_properties_typeProperties_database')]"
 					},
-					"DWAzureSQL_SRC_properties_typeProperties_userName": {
-						"value": "[parameters('DWAzureSQL_SRC_properties_typeProperties_userName')]"
+					"AzureSqlDatabase2_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase2_properties_typeProperties_userName')]"
 					},
 					"DWAzureSQL_Dest_properties_typeProperties_server": {
 						"value": "[parameters('DWAzureSQL_Dest_properties_typeProperties_server')]"
@@ -156,14 +156,14 @@
 					"DWAzureSQL_Dest_properties_typeProperties_userName": {
 						"value": "[parameters('DWAzureSQL_Dest_properties_typeProperties_userName')]"
 					},
-					"AzureSqlDatabase2_properties_typeProperties_server": {
-						"value": "[parameters('AzureSqlDatabase2_properties_typeProperties_server')]"
+					"DWAzureSQL_SRC_properties_typeProperties_server": {
+						"value": "[parameters('DWAzureSQL_SRC_properties_typeProperties_server')]"
 					},
-					"AzureSqlDatabase2_properties_typeProperties_database": {
-						"value": "[parameters('AzureSqlDatabase2_properties_typeProperties_database')]"
+					"DWAzureSQL_SRC_properties_typeProperties_database": {
+						"value": "[parameters('DWAzureSQL_SRC_properties_typeProperties_database')]"
 					},
-					"AzureSqlDatabase2_properties_typeProperties_userName": {
-						"value": "[parameters('AzureSqlDatabase2_properties_typeProperties_userName')]"
+					"DWAzureSQL_SRC_properties_typeProperties_userName": {
+						"value": "[parameters('DWAzureSQL_SRC_properties_typeProperties_userName')]"
 					},
 					"LocalServer_AdventureWorks_properties_typeProperties_server": {
 						"value": "[parameters('LocalServer_AdventureWorks_properties_typeProperties_server')]"

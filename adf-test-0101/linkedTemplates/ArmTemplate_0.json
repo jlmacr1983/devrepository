@@ -11,17 +11,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
 		},
-		"DWAzureSQL_SRC_password": {
+		"AzureSqlDatabase2_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'DWAzureSQL_SRC'"
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase2'"
 		},
 		"DWAzureSQL_Dest_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'DWAzureSQL_Dest'"
 		},
-		"AzureSqlDatabase2_password": {
+		"DWAzureSQL_SRC_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'AzureSqlDatabase2'"
+			"metadata": "Secure string for 'password' of 'DWAzureSQL_SRC'"
 		},
 		"LocalServer_AdventureWorks_password": {
 			"type": "secureString",
@@ -39,15 +39,15 @@
 			"type": "string",
 			"defaultValue": "jorge"
 		},
-		"DWAzureSQL_SRC_properties_typeProperties_server": {
+		"AzureSqlDatabase2_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "dbadventureserver001.database.windows.net"
 		},
-		"DWAzureSQL_SRC_properties_typeProperties_database": {
+		"AzureSqlDatabase2_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "DW2019"
+			"defaultValue": "dbtestadventure"
 		},
-		"DWAzureSQL_SRC_properties_typeProperties_userName": {
+		"AzureSqlDatabase2_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "jorge"
 		},
@@ -63,15 +63,15 @@
 			"type": "string",
 			"defaultValue": "jorge"
 		},
-		"AzureSqlDatabase2_properties_typeProperties_server": {
+		"DWAzureSQL_SRC_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "dbadventureserver001.database.windows.net"
 		},
-		"AzureSqlDatabase2_properties_typeProperties_database": {
+		"DWAzureSQL_SRC_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "dbtestadventure"
+			"defaultValue": "DW2019"
 		},
-		"AzureSqlDatabase2_properties_typeProperties_userName": {
+		"DWAzureSQL_SRC_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "jorge"
 		},
@@ -115,6 +115,50 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlDatabase2_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlDatabase2_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlDatabase2_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureSqlDatabase2_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DWAzureSQL_Dest')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('DWAzureSQL_Dest_properties_typeProperties_server')]",
+					"database": "[parameters('DWAzureSQL_Dest_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('DWAzureSQL_Dest_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('DWAzureSQL_Dest_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DWAzureSQL_SRC')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -147,50 +191,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DWAzureSQL_Dest')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('DWAzureSQL_Dest_properties_typeProperties_server')]",
-					"database": "[parameters('DWAzureSQL_Dest_properties_typeProperties_database')]",
-					"encrypt": "optional",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('DWAzureSQL_Dest_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('DWAzureSQL_Dest_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('AzureSqlDatabase2_properties_typeProperties_server')]",
-					"database": "[parameters('AzureSqlDatabase2_properties_typeProperties_database')]",
-					"encrypt": "optional",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('AzureSqlDatabase2_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('AzureSqlDatabase2_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureSQL')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -209,6 +209,111 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DWAzureSQL_Dest",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CustomerID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NameStyle",
+						"type": "bit"
+					},
+					{
+						"name": "Title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MiddleName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Suffix",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CompanyName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesPerson",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EmailAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Phone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PasswordHash",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PasswordSalt",
+						"type": "nvarchar"
+					},
+					{
+						"name": "rowguid",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "staging",
+					"table": "DimDate"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/DWAzureSQL_Dest')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DestPrd')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "prd",
+					"table": "tb_Customers"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase2')]"
 			]
 		},
 		{
@@ -325,108 +430,208 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/adfcdc1')]",
+			"type": "Microsoft.DataFactory/factories/adfcdcs",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DWAzureSQL_Dest",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
+				"SourceConnectionsInfo": [
 					{
-						"name": "CustomerID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "NameStyle",
-						"type": "bit"
-					},
-					{
-						"name": "Title",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FirstName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MiddleName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Suffix",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CompanyName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SalesPerson",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EmailAddress",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Phone",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PasswordHash",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PasswordSalt",
-						"type": "nvarchar"
-					},
-					{
-						"name": "rowguid",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "datetime2",
-						"scale": 7
+						"SourceEntities": [
+							{
+								"name": "SalesLT.Customer",
+								"properties": {
+									"schema": [],
+									"dslConnectorProperties": [
+										{
+											"name": "schemaName",
+											"value": "SalesLT"
+										},
+										{
+											"name": "tableName",
+											"value": "Customer"
+										},
+										{
+											"name": "enableCdc",
+											"value": true
+										},
+										{
+											"name": "waterMarkColumn",
+											"value": "ModifiedDate"
+										}
+									]
+								}
+							}
+						],
+						"Connection": {
+							"linkedService": {
+								"referenceName": "DWAzureSQL_SRC",
+								"type": "LinkedServiceReference"
+							},
+							"linkedServiceType": "AzureSqlDatabase",
+							"type": "linkedservicetype",
+							"isInlineDataset": true,
+							"commonDslConnectorProperties": [
+								{
+									"name": "allowSchemaDrift",
+									"value": true
+								},
+								{
+									"name": "inferDriftedColumnTypes",
+									"value": true
+								},
+								{
+									"name": "format",
+									"value": "table"
+								},
+								{
+									"name": "store",
+									"value": "sqlserver"
+								},
+								{
+									"name": "databaseType",
+									"value": "databaseType"
+								},
+								{
+									"name": "database",
+									"value": "database"
+								},
+								{
+									"name": "skipInitialLoad",
+									"value": true
+								}
+							]
+						}
 					}
 				],
-				"typeProperties": {
-					"schema": "staging",
-					"table": "DimDate"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DWAzureSQL_Dest')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestPrd')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase2",
-					"type": "LinkedServiceReference"
+				"TargetConnectionsInfo": [
+					{
+						"TargetEntities": [
+							{
+								"name": "dbo.Customer",
+								"properties": {
+									"schema": [],
+									"dslConnectorProperties": [
+										{
+											"name": "schemaName",
+											"value": "dbo"
+										},
+										{
+											"name": "tableName",
+											"value": "Customer"
+										},
+										{
+											"name": "keys",
+											"value": [
+												"CustomerID"
+											]
+										},
+										{
+											"name": "deletable",
+											"value": true
+										},
+										{
+											"name": "updateable",
+											"value": true
+										},
+										{
+											"name": "upsertable",
+											"value": true
+										},
+										{
+											"name": "defaultToUpsert",
+											"value": true
+										}
+									]
+								}
+							}
+						],
+						"Connection": {
+							"linkedService": {
+								"referenceName": "DWAzureSQL_Dest",
+								"type": "LinkedServiceReference"
+							},
+							"linkedServiceType": "AzureSqlDatabase",
+							"type": "linkedservicetype",
+							"isInlineDataset": true,
+							"commonDslConnectorProperties": [
+								{
+									"name": "allowSchemaDrift",
+									"value": true
+								},
+								{
+									"name": "inferDriftedColumnTypes",
+									"value": true
+								},
+								{
+									"name": "format",
+									"value": "table"
+								},
+								{
+									"name": "store",
+									"value": "sqlserver"
+								},
+								{
+									"name": "databaseType",
+									"value": "databaseType"
+								},
+								{
+									"name": "database",
+									"value": "database"
+								},
+								{
+									"name": "deletable",
+									"value": false
+								},
+								{
+									"name": "insertable",
+									"value": true
+								},
+								{
+									"name": "updateable",
+									"value": false
+								},
+								{
+									"name": "upsertable",
+									"value": false
+								},
+								{
+									"name": "skipDuplicateMapInputs",
+									"value": true
+								},
+								{
+									"name": "skipDuplicateMapOutputs",
+									"value": true
+								}
+							]
+						},
+						"DataMapperMappings": [
+							{
+								"targetEntityName": "dbo.Customer",
+								"sourceEntityName": "SalesLT.Customer",
+								"sourceConnectionReference": {
+									"connectionName": "DWAzureSQL_SRC",
+									"type": "linkedservicetype"
+								},
+								"attributeMappingInfo": {
+									"attributeMappings": []
+								}
+							}
+						],
+						"Relationships": []
+					}
+				],
+				"Policy": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 15
+					},
+					"mode": "Microbatch"
 				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "prd",
-					"table": "tb_Customers"
-				}
+				"allowVNetOverride": false
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase2')]"
+				"[concat(variables('factoryId'), '/linkedServices/DWAzureSQL_SRC')]",
+				"[concat(variables('factoryId'), '/linkedServices/DWAzureSQL_Dest')]"
 			]
 		},
 		{
