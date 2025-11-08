@@ -14,6 +14,12 @@
 		"LocalServer_AdventureWorks_password": {
 			"value": ""
 		},
+		"DWAzureSQL_Dest_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase2_password": {
+			"value": ""
+		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"value": "dbadventureserver001.database.windows.net"
 		},
@@ -40,6 +46,24 @@
 		},
 		"LocalServer_AdventureWorks_properties_typeProperties_userName": {
 			"value": "sa"
+		},
+		"DWAzureSQL_Dest_properties_typeProperties_server": {
+			"value": "dbadventureserver001.database.windows.net"
+		},
+		"DWAzureSQL_Dest_properties_typeProperties_database": {
+			"value": "dbtestadventure"
+		},
+		"DWAzureSQL_Dest_properties_typeProperties_userName": {
+			"value": "jorge"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_server": {
+			"value": "dbadventureserver001.database.windows.net"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_database": {
+			"value": "dbtestadventure"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_userName": {
+			"value": "jorge"
 		}
 	}
 }
