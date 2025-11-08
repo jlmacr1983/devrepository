@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "SourceDimDate",
+						"referenceName": "Customers",
 						"type": "DataFlowReference"
 					},
 					"compute": {
