@@ -1,0 +1,65 @@
+{
+	"name": "SourceDimDate",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SqlServerTable2",
+						"type": "DatasetReference"
+					},
+					"name": "DimDate"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSQL",
+						"type": "DatasetReference"
+					},
+					"name": "DestDimDate"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          DateKey as integer,",
+				"          FullDateAlternateKey as date,",
+				"          DayNumberOfWeek as integer,",
+				"          EnglishDayNameOfWeek as string,",
+				"          SpanishDayNameOfWeek as string,",
+				"          FrenchDayNameOfWeek as string,",
+				"          DayNumberOfMonth as integer,",
+				"          DayNumberOfYear as integer,",
+				"          WeekNumberOfYear as integer,",
+				"          EnglishMonthName as string,",
+				"          SpanishMonthName as string,",
+				"          FrenchMonthName as string,",
+				"          MonthNumberOfYear as integer,",
+				"          CalendarQuarter as integer,",
+				"          CalendarYear as integer,",
+				"          CalendarSemester as integer,",
+				"          FiscalQuarter as integer,",
+				"          FiscalYear as integer,",
+				"          FiscalSemester as integer",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> DimDate",
+				"DimDate sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> DestDimDate"
+			]
+		}
+	}
+}
