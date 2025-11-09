@@ -855,7 +855,7 @@
 						"     validateSchema: true,",
 						"     enableCdc: true,",
 						"     mode: 'read',",
-						"     skipInitialLoad: false,",
+						"     skipInitialLoad: true,",
 						"     waterMarkColumn: 'ModifiedDate',",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     query: 'SELECT  [CustomerID]\\n      ,[NameStyle]\\n      ,[Title]\\n      ,[FirstName]\\n      ,[MiddleName]\\n      ,[LastName]\\n      ,[Suffix]\\n      ,[CompanyName]\\n      ,[SalesPerson]\\n      ,[EmailAddress]\\n      ,[Phone]\\n      ,[PasswordHash]\\n      ,[PasswordSalt]\\n      ,[rowguid]\\n      ,[ModifiedDate]\\n  FROM [SalesLT].[Customer]',",
