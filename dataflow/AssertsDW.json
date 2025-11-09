@@ -53,7 +53,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     query: 'SELECT  [CustomerID]\\n      ,[NameStyle]\\n      ,[Title]\\n      ,[FirstName]\\n      ,[MiddleName]\\n      ,[LastName]\\n      ,[Suffix]\\n      ,[CompanyName]\\n      ,[SalesPerson]\\n      ,[EmailAddress]\\n      ,[Phone]\\n      ,[PasswordHash]\\n      ,[PasswordSalt]\\n      ,[rowguid]\\n      ,[ModifiedDate]\\n  FROM [SalesLT].[Customer]',",
 				"     format: 'query') ~> source1",
-				"source1 assert(expectTrue(Title=='Assert', true, 'assert1', null, \"Titulo invalido\"),",
+				"source1 assert(expectTrue(Title!='Assert', true, 'assert1', null, \"Titulo invalido\"),",
 				"     abort: true) ~> ReviewTitle",
 				"ReviewTitle sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
